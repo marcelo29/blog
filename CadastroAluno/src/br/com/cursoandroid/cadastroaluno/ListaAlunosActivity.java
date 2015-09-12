@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,11 +24,11 @@ import br.com.android.R;
 
 public class ListaAlunosActivity extends Activity {
 
-	//Definicao de constantes
+	// Definicao de constantes
 	private String TAG = "CADASTRO_ALUNO";
 	private String ALUNOS_KEY = "LISTA";
-	
-	//Atributos de tela
+
+	// Atributos de tela
 	private EditText edNome;
 	private Button botao;
 	private ListView lvListagem;
@@ -46,7 +47,7 @@ public class ListaAlunosActivity extends Activity {
 		botao = (Button) findViewById(R.id.btAddListagem);
 		lvListagem = (ListView) findViewById(R.id.lvListagem);
 
-		//criando a lista de alunos
+		// criando a lista de alunos
 		listaAlunos = new ArrayList<String>();
 
 		// o objeto ArrayAdapter sabe converter lista ou vetores em View
@@ -96,46 +97,50 @@ public class ListaAlunosActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		// Inclusao da lista de alunos ao objeto Bundle.Map
 		outState.putStringArrayList(ALUNOS_KEY, (ArrayList<String>) listaAlunos);
-		//Persistencia do objeto Bundle
+		// Persistencia do objeto Bundle
 		super.onSaveInstanceState(outState);
-		//Lancamento de msg de log
+		// Lancamento de msg de log
 		Log.i(TAG, "onSaveInstanceState(): " + listaAlunos);
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		//Recuperao o estado do objeto Bundle		
+		// Recuperao o estado do objeto Bundle
 		super.onRestoreInstanceState(savedInstanceState);
-		//Carrega lista de alunos do Bundle.map
+		// Carrega lista de alunos do Bundle.map
 		listaAlunos = savedInstanceState.getStringArrayList(ALUNOS_KEY);
-		//Lancamento de msg de log
+		// Lancamento de msg de log
 		Log.i(TAG, "onSaveRestoreState(): " + listaAlunos);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//definicao do objeto inflater
+		// definicao do objeto inflater
 		MenuInflater inflater = this.getMenuInflater();
-		
-		//inflar um xml em um menu vazio
+
+		// inflar um xml em um menu vazio
 		inflater.inflate(R.menu.menu_principal, menu);
-		
-		
-		//exibir o menu 
+
+		// exibir o menu
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//verifica o item do menu selecionado
+		// verifica o item do menu selecionado
 		switch (item.getItemId()) {
-		//verifica se foi selecionado o item novo
+		// verifica se foi selecionado o item novo
 		case R.id.menu_novo:
-			Toast.makeText(ListaAlunosActivity.this, "Voce clicou em novo", Toast.LENGTH_LONG).show();
+
+			// Criacao do especialista em mudanca de telas
+			Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+			// Carrega nova tela
+			startActivity(intent);
+
 			return false;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-		
+
 	}
 }
